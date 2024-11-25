@@ -3,7 +3,6 @@ import { TError } from "./error.interface";
 import { NextFunction, Request, Response } from "express";
 import config from "../app/config";
 
-
 const genericErrorHandler = (
   error: any,
   req: Request,
@@ -41,7 +40,6 @@ const genericErrorHandler = (
       stack: process.env.NODE_ENV === "production" ? undefined : error.stack,
     };
   } else {
-
     errorResponse = {
       message: error.message || "An error occurred",
       status: false,

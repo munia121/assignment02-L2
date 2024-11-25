@@ -9,16 +9,13 @@ const app: Application = express();
 app.use(express.json());
 app.use(cors());
 
-app.use('/api/products', productRouter)
-app.use('/api/orders', orderRouter)
-
+app.use("/api/products", productRouter);
+app.use("/api/orders", orderRouter);
 
 app.get("/", (req: Request, res: Response) => {
- 
-  res.send('my server is running');
+  res.send("my server is running");
 });
 
-app.use(genericErrorHandler)
+app.use(genericErrorHandler);
 
-export default app; 
- 
+export default app;

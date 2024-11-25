@@ -22,5 +22,4 @@ export type TError = {
     };
   };
   stack?: string;
-
-}
+};
