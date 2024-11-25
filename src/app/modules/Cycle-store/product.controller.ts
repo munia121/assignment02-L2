@@ -1,7 +1,7 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { productServices } from "./product.service";
 
-const createProduct = async (req: Request, res: Response) => {
+const createProduct = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const productData = req.body
         const result = await productServices.createProductIntoBD(productData)
@@ -12,79 +12,81 @@ const createProduct = async (req: Request, res: Response) => {
             data: result || {},
         })
     } catch (error) {
-        res.json({
-            message: 'Something went wrong {VALUE}',
-            status: false,
-            error: error,
-        })
+        next(error)
     }
 }
 
 
-const getAllProduct = async (req: Request, res: Response) => {
+const getAllProduct = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const result = await productServices.getAllProductFromDB()
+        const { searchTerm } = req.query;
+        const result = await productServices.getAllProductFromDB(searchTerm)
 
         res.json({
-            message: 'Bicycle get successfully',
-            success: true,
+            message: 'Bicycles retrieved successfully',
+            status: true,
             data: result,
         })
     } catch (error) {
-        res.json({
-            message: 'Something went wrong {VALUE}',
-            status: false,
-            error: error,
-        })
+        next(error)
     }
 }
 
-const getSingleData = async (req: Request, res: Response) => {
+const getSingleData = async (req: Request, res: Response, next: NextFunction) => {
 
     try {
         const { productId } = req.params
         const result = await productServices.getSingleDataFromDB(productId)
         res.json({
-            message: 'A single Bicycle get successfully',
-            success: true,
+            message: 'Bicycle retrieved successfully',
+            status: true,
             data: result,
         })
     } catch (error) {
-        res.json({
-            message: 'Something went wrong {VALUE}',
-            status: false,
-            error: error,
-        })
+        next()
     }
 }
 
 
-const updateProduct = async (req: Request, res: Response) => {
+const updateProduct = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { productId } = req.params
-        const updateDoc =  req.body
+        const updateDoc = req.body
 
-        
+
         const result = await productServices.updateProductFromDB(productId, updateDoc)
         res.json({
-            message: 'A single Bicycle get successfully',
-            success: true,
-            data: result ,
+            message: 'Bicycle updated successfully',
+            status: true,
+            data: result,
         })
     } catch (error) {
-        res.json({
-            message: 'Something went wrong {VALUE}',
-            status: false,
-            error: error,
-        })
+        next(error)
     }
 }
 
+
+
+const deleteProduct = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { productId } = req.params
+
+        const result = await productServices.deleteProductFromDB(productId)
+        res.json({
+            message: 'Bicycle deleted successfully',
+            status: true,
+            data: result || {},
+        })
+    } catch (error) {
+        next(error)
+    }
+}
 
 
 export const productControllers = {
     createProduct,
     getAllProduct,
     getSingleData,
-    updateProduct
+    updateProduct,
+    deleteProduct
 }

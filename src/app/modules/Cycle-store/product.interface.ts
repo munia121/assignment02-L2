@@ -2,6 +2,7 @@ import { ObjectId } from "mongoose";
 
 // interfaces/Product.ts
 export interface IProduct {
+    _id:string;
     name: string;
     brand: string;
     price: number;
@@ -13,15 +14,3 @@ export interface IProduct {
     updatedAt?: Date; 
 }
 
-
-
-
-// interfaces/Order.ts
-export interface IOrder {
-    email: string;
-    product: ObjectId; 
-    quantity: number;
-    totalPrice: number;
-    createdAt?: Date; 
-    updatedAt?: Date; 
-}

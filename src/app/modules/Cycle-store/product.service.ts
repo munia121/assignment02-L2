@@ -6,14 +6,27 @@ const createProductIntoBD = async (product: IProduct) => {
     return result;
 }
 
-const getAllProductFromDB = async () => {
-    const result = await ModelsSchema.productModel.find()
+const getAllProductFromDB = async (searchTerm:any) => {
+    const filter = searchTerm
+    ? {
+        $or: [
+          { name: { $regex: searchTerm || "", $options: "i" } },
+          { brand: { $regex: searchTerm || "", $options: "i" } },
+          { type: { $regex: searchTerm || "", $options: "i" } },
+        ],
+        
+      }  : {};
+
+    const result = await ModelsSchema.productModel.find(filter)
+
+
+
+
     return result
 }
 
 const getSingleDataFromDB = async (id: string) => {
     const result = await ModelsSchema.productModel.findOne({ _id: id })
-    console.log('controllers result', result)
     return result
 }
 
@@ -28,10 +41,16 @@ const updateProductFromDB = async (id: string, updateDoc:IProduct) =>{
 }
 
 
+const deleteProductFromDB = async(id:string) =>{
+    const result =  await ModelsSchema.productModel.findByIdAndDelete({_id: id})
+    return result;
+}
+
 export const productServices = {
     createProductIntoBD,
     getAllProductFromDB,
     getSingleDataFromDB,
-    updateProductFromDB
+    updateProductFromDB,
+    deleteProductFromDB
     
 }

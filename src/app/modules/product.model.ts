@@ -1,5 +1,6 @@
 import mongoose, { model, Schema } from "mongoose";
-import { IOrder, IProduct } from "./Cycle-store/product.interface";
+import { IProduct } from "./Cycle-store/product.interface";
+import { IOrder } from "./order-cycle/order.interface";
 
 const productSchema = new Schema<IProduct>(
     {
@@ -19,14 +20,33 @@ const productSchema = new Schema<IProduct>(
 )
 
 
-const orderSchema = new Schema<IOrder>({
-    email: { type: String, required: true },
-    product: { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true },
-    quantity: { type: Number, required: true, min: 1 },
-    totalPrice: { type: Number, required: true, min: 0 },
+const orderSchema = new Schema<IOrder>(
+    {
+      email: {
+        type: String,
+        required: true,
+        trim: true, 
+      },
+      product: {
+      type: String,
+         
+        required: true,
+      },
+      quantity: {
+        type: Number,
+        required: true,
+        min: 1, 
+      },
+      totalPrice: {
+        type: Number,
+        required: true,
+        min: 0, 
+      },
     },
-    { timestamps: true }
-)
+    {
+      timestamps: true,
+    }
+  );
 
 
 const productModel = model<IProduct>('Product' , productSchema)
