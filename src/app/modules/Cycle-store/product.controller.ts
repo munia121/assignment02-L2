@@ -10,7 +10,7 @@ const createProduct = async (
     const productData = req.body;
     const result = await productServices.createProductIntoBD(productData);
 
-    res.json({
+    res.status(200).json({
       message: "Bicycle created successfully",
       success: true,
       data: result || {},
@@ -29,7 +29,7 @@ const getAllProduct = async (
     const { searchTerm } = req.query;
     const result = await productServices.getAllProductFromDB(searchTerm);
 
-    res.json({
+    res.status(200).json({
       message: "Bicycles retrieved successfully",
       status: true,
       data: result,
@@ -47,7 +47,7 @@ const getSingleData = async (
   try {
     const { productId } = req.params;
     const result = await productServices.getSingleDataFromDB(productId);
-    res.json({
+    res.status(200).json({
       message: "Bicycle retrieved successfully",
       status: true,
       data: result,
@@ -70,7 +70,7 @@ const updateProduct = async (
       productId,
       updateDoc,
     );
-    res.json({
+    res.status(200).json({
       message: "Bicycle updated successfully",
       status: true,
       data: result,
@@ -89,7 +89,7 @@ const deleteProduct = async (
     const { productId } = req.params;
 
     const result = await productServices.deleteProductFromDB(productId);
-    res.json({
+    res.status(200).json({
       message: "Bicycle deleted successfully",
       status: true,
       data: result || {},

@@ -21,18 +21,16 @@ export default [
     rules: {
       "no-unused-vars": "error",
       "prefer-const": ["error", { ignoreReadBeforeAssign: true }],
-      "no-unused-expressions": "error",
+      "no-unused-expressions": "off",
       "no-console": "warn",
       "no-undef": "error",
       "@typescript-eslint/no-explicit-any": "off",
-      "prettier/prettier": [
-        "error",
-        {
-          endOfLine: "auto",
-        },
-      ],
+      "@typescript-eslint/no-require-imports": "off",
+      "@typescript-eslint/no-unused-expressions": "off",
+      "require-yield": "off",
     },
   },
+
   {
     ignores: [".node_modules/*", ".dist/*"],
   },

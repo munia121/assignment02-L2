@@ -15,7 +15,7 @@ const createdOrder = async (
       totalPrice,
     );
 
-    res.json({
+    res.status(200).json({
       message: "Order created successfully",
       status: true,
       data: orderData || {},
